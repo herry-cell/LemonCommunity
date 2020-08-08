@@ -11,10 +11,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 /**
@@ -40,7 +39,8 @@ public class GiteeController {
      * 授权回调
      */
     @GetMapping(value = "/callback")
-    public String qqCallback(HttpServletRequest request) throws Exception {
+    public String qqCallback(HttpServletRequest request,
+                             HttpServletResponse response) throws Exception {
         // 得到Authorization Code
         String code = request.getParameter("code");
 
@@ -64,13 +64,14 @@ public class GiteeController {
         System.out.println(giteeUser);
         if (giteeUser != null) {
             User user = new User();
-            user.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            user.setToken(token);
             user.setName(giteeUser.getName());
             user.setAccountId(String.valueOf(giteeUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-            request.getSession().setAttribute("giteeUser", giteeUser);
+            response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
             return "redirect:/";
