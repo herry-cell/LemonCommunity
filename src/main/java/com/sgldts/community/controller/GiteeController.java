@@ -3,7 +3,10 @@ package com.sgldts.community.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.sgldts.community.dto.GiteeUser;
+import com.sgldts.community.mapper.UserMapper;
+import com.sgldts.community.model.User;
 import com.sgldts.community.utils.GiteeHttpClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +32,9 @@ public class GiteeController {
 
     @Value("${gitee.oauth.callback}")
     private String URL;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 授权回调
@@ -56,7 +62,19 @@ public class GiteeController {
         String string = jsonObject.toString();
         GiteeUser giteeUser = JSON.parseObject(string, GiteeUser.class);
         System.out.println(giteeUser);
-        return "index";
+        if (giteeUser != null) {
+            User user = new User();
+            user.setToken(UUID.randomUUID().toString());
+            user.setName(giteeUser.getName());
+            user.setAccountId(String.valueOf(giteeUser.getId()));
+            user.setGmtCreate(System.currentTimeMillis());
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insert(user);
+            request.getSession().setAttribute("giteeUser", giteeUser);
+            return "redirect:/";
+        } else {
+            return "redirect:/";
+        }
     }
 
 }

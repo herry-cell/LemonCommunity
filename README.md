@@ -12,3 +12,18 @@
 [Git](https://git-scm.com/download)<br>
 [Visual Paradigm](https://www.visual-paradigm.com)
 
+#### 脚本
+
+创建user表
+```sql
+create table user
+(
+	id INT auto_increment primary key not null,
+	account_id varchar(100),
+	name varchar(50),
+	token char(36),
+	gmt_create BIGINT,
+	gmt_modified BIGINT
+);
+```
+
