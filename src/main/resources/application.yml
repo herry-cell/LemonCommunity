@@ -1,0 +1,11 @@
+
+gitee:
+  oauth:
+    #appid
+    clientid: 372a1157585fc38267b1ee2ac7b0b89f9d647208ce4dd0283f358911571149ce
+
+    #appsecret
+    clientsecret: 1926f580ded3aadd7bfca7e838cfe962c20354f5984bc8f13b04423e966b0d40
+
+    #callback
+    callback: http://localhost:8080/callback
