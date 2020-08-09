@@ -11,6 +11,9 @@
 ### 工具
 [Git](https://git-scm.com/download)<br>
 [Visual Paradigm](https://www.visual-paradigm.com)
+[flyway](https://flywaydb.org/getstarted/firststeps/maven)
+[h2](https://mvnrepository.com/artifact/com.h2database/h2)
+[maven generator](http://mybatis.org/generator/running/runningWithMaven.html)
 
 #### 脚本
 
@@ -27,3 +30,26 @@ create table user
 );
 ```
 
+创建question表
+```sql
+create table question
+(
+	id int auto_increment,
+	title varchar(50),
+	description text,
+	gmt_create BIGINT,
+	gmt_modified BIGINT,
+	creator INT,
+	comment_count int default 0,
+	view_count int default 0,
+	like_count INT default 0,
+	tag varchar(256),
+	constraint question_pk
+		primary key (id)
+);
+```
+
+```bash
+mvn flyway:migrate
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```

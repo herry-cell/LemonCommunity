@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发布</title>
+    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
+    <script type="application/javascript" th:src="@{js/bootstrap.min.js}"></script>
+    <script type="application/javascript" th:src="@{js/npm.js}"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">柠檬社区</span>
+            </button>
+            <a class="navbar-brand" href="#">柠檬社区</a>
+        </div>
+
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="搜索话题">
+                </div>
+                <button type="submit" class="btn btn-default">提交</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li th:if="${session.giteeUser == null}"><a th:href="@{https://gitee.com/oauth/authorize?response_type=code&client_id=372a1157585fc38267b1ee2ac7b0b89f9d647208ce4dd0283f358911571149ce&redirect_uri=http://localhost:8080/callback&scope=user_info}">登录</a></li>
+                <li class="dropdown" th:if="${session.giteeUser != null}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.giteeUser.name}"><span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">消息中心</a></li>
+                        <li><a href="#">个人资料</a></li>
+                        <li><a href="#">退出登录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <div class="container-fluid">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style="background-color: red; height: 300px;"></div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12" style="background-color: green; height: 300px;"></div>
+    </div>
+
+</body>
+</html>

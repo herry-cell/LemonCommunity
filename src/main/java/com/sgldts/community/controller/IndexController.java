@@ -2,12 +2,14 @@ package com.sgldts.community.controller;
 
 import com.sgldts.community.mapper.UserMapper;
 import com.sgldts.community.model.User;
+import com.sgldts.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author herry
@@ -27,9 +29,12 @@ public class IndexController {
             for (Cookie cookie : cookies) {
                 if ("token".equals(cookie.getName())) {
                     String token = cookie.getValue();
-                    User user = userMapper.findByToken(token);
-                    if (user != null) {
-                        request.getSession().setAttribute("giteeUser", user);
+                    UserExample userExample = new UserExample();
+                    userExample.createCriteria()
+                            .andTokenEqualTo(token);
+                    List<User> users = userMapper.selectByExample(userExample);
+                    if (users.size() != 0) {
+                        request.getSession().setAttribute("user", users.get(0));
                     }
                     break;
                 }

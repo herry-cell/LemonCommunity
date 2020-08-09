@@ -65,12 +65,12 @@ public class GiteeController {
         if (giteeUser != null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
-            user.setToken(token);
             user.setName(giteeUser.getName());
             user.setAccountId(String.valueOf(giteeUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
-            userMapper.insert(user);
+            user.setToken(token);
+
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
         } else {
