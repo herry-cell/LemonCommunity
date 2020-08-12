@@ -31,25 +31,30 @@ public class QuestionService {
     public PaginationDTO list(Integer page, Integer size) {
 
         PaginationDTO paginationDTO = new PaginationDTO();
-        Long totalCount = questionMapper.countByExample(new QuestionExample());
-        paginationDTO.setPagination(totalCount, page, size);
+
+        Integer totalPage;
+
+        Integer totalCount = (int) questionMapper.countByExample(new QuestionExample());
+
+        if (totalCount % size == 0) {
+            totalPage = totalCount / size;
+        } else {
+            totalPage = totalCount / size + 1;
+        }
 
         if (page < 1) {
             page = 1;
         }
-        if (page > paginationDTO.getTotalPage()) {
-            page = paginationDTO.getTotalPage();
+        if (page > totalPage) {
+            page = totalPage;
         }
 
+        paginationDTO.setPagination(totalPage, page);
 
         Integer offset = size * (page - 1);
 
         List<QuestionDTO> questionDTOList = new ArrayList<>();
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.createCriteria()
-                .andCreatorBetween(offset, size);
-        List<Question> questions = questionMapper.selectByExample(questionExample);
-
+        questionMapper.select
         if (questions != null) {
             for (Question question : questions) {
                 User user = userMapper.selectByPrimaryKey(question.getCreator());
