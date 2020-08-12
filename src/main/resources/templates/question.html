@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${question.title}">个人中心</title>
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
-    <link rel="stylesheet" th:href="@{css/my.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/my.css}">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-    <script type="application/javascript" th:src="@{js/bootstrap.min.js}"></script>
-    <script type="application/javascript" th:src="@{js/npm.js}"></script>
+    <script type="application/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/npm.js}"></script>
 </head>
 <body>
 
-<div th:insert="~{navigation :: nav}"></div>
+<nav th:replace="navigation :: nav"></nav>
 
 
 <div class="container-fluid main profile">

@@ -66,7 +66,7 @@ public class publishController {
             return "publish";
         }
 
-        User user = (User) request.getAttribute("user");
+        User user = (User) request.getSession().getAttribute("giteeUser");
 
         if (user == null) {
             model.addAttribute("error", "用户未登录");
@@ -74,10 +74,10 @@ public class publishController {
         } else {
             Question question = new Question();
             question.setTitle(title);
+            System.out.println(description);
             question.setDescription(description);
             question.setTag(tag);
             question.setCreator(user.getId());
-            question.setGmtModified(question.getGmtCreate());
             question.setId(id);
             questionService.createOrUpdate(question);
             return "redirect:/";

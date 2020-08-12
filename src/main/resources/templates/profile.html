@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${sectionName}">个人中心</title>
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
-    <link rel="stylesheet" th:href="@{css/my.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/my.css}">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-    <script type="application/javascript" th:src="@{js/bootstrap.min.js}"></script>
-    <script type="application/javascript" th:src="@{js/npm.js}"></script>
+    <script type="application/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/npm.js}"></script>
 </head>
 <body>
 
-<div th:insert="~{navigation :: nav}"></div>
+<nav th:replace="navigation :: nav"></nav>
 
 
 <div class="container-fluid main profile">
@@ -22,12 +22,14 @@
             <hr>
             <div class="media" th:each="question : ${paginationDTO.questions}">
                 <div class="media-left">
-                    <a href="">
+                    <a th:href="@{'/question/' + ${question.id}}">
                         <img src="" th:src="${question.user.avatarUrl}" class="media-object img-rounded" alt="">
                     </a>
                 </div>
                 <div class="media-body">
-                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <h4 class="media-heading">
+                        <a th:href="@{'/question/' + ${question.id}}" th:text="${question.title}"></a>
+                    </h4>
                     <span th:text="${question.description}"></span>
                     <span class="text-desc">
                         <span th:text="${question.commentCount}"></span>个回复 |
@@ -38,25 +40,25 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li th:if="${paginationDTO.showFirstPage}">
-                        <a href="/?page=1" aria-label="First">
+                        <a href="@{'/profile/'+${section}(page=${1})}" aria-label="First">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li th:if="${paginationDTO.showPrevious}">
-                        <a th:href="@{/(page=${paginationDTO.page - 1})}" aria-label="Previous">
+                        <a th:href="@{'/profile/'+${section}(page=${paginationDTO.page - 1})}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li th:each="page : ${paginationDTO.pages}" th:class="${paginationDTO.page == page} ? 'active' : ''">
-                        <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+                        <a th:href="@{'/profile/'+${section}(page=${page})}" th:text="${page}"></a>
                     </li>
                     <li th:if="${paginationDTO.showNext}">
-                        <a th:href="@{/(page=${paginationDTO.page + 1})}" aria-label="Next">
+                        <a th:href="@{'/profile/'+${section}(page=${paginationDTO.page + 1})}" aria-label="Next">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${paginationDTO.showEndPage}">
-                        <a th:href="@{/(page=${paginationDTO.totalPage})}" aria-label="End">
+                        <a th:href="@{'/profile/'+${section}(page=${paginationDTO.totalPage})}" aria-label="End">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

@@ -1,8 +1,6 @@
 package com.sgldts.community.controller;
 
 import com.sgldts.community.dto.QuestionDTO;
-import com.sgldts.community.mapper.QuestionMapper;
-import com.sgldts.community.model.Question;
 import com.sgldts.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +18,7 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    @GetMapping("question/{id}")
+    @GetMapping("/question/{id}")
     public String question(@PathVariable("id") Integer id,
                            Model model) {
         QuestionDTO questionDTO = questionService.getById(id);

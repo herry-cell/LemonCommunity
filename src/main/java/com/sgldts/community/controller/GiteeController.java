@@ -98,7 +98,7 @@ public class GiteeController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,
                          HttpServletResponse response) {
-        request.getSession().removeAttribute("user");
+        request.getSession().removeAttribute("giteeUser");
         Cookie token = new Cookie("token", null);
         token.setMaxAge(0);
         response.addCookie(token);

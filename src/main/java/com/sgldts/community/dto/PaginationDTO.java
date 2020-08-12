@@ -2,6 +2,7 @@ package com.sgldts.community.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ public class PaginationDTO {
     private boolean showEndPage;
     private Integer page;
     private Integer totalPage;
-    private List<Integer> pages;
+    private List<Integer> pages = new ArrayList<>();
 
 
     public void setPagination(Integer totalPage, Integer page) {

@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>发布</title>
-    <link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{css/bootstrap-theme.min.css}">
-    <link rel="stylesheet" th:href="@{css/my.css}">
-    <script type="application/javascript" th:src="@{js/bootstrap.min.js}"></script>
-    <script type="application/javascript" th:src="@{js/npm.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/my.css}">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script type="application/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/npm.js}"></script>
 </head>
 <body>
-<div th:insert="~{navigation :: nav}">
-</div>
-
+<nav th:replace="navigation :: nav"></nav>
     <div class="container-fluid main">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
             <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-top: 5px; font-size: 25px">发起</span>
@@ -25,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充（必填，请参照右侧提示）：</label>
-                    <textarea name="description" id="description" th:value="${description}" class="form-control" cols="30" rows="10"></textarea>
+                    <textarea name="description" id="description" th:text="${description}" class="form-control" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
