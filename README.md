@@ -7,6 +7,8 @@
 [Github deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys)<br>
 [Bootstrap](https://v3.bootcss.com/getting-started/)<br>
 [Github OAuth](https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/)
+[Thymeleaf](https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#setting-attribute-values)
+[springmvc](https://docs.spring.io/spring/docs/5.0.3.RELEASE/spring-framework-reference/web.html#mvc-handlermapping-int)
 
 ### 工具
 [Git](https://git-scm.com/download)<br>
@@ -14,6 +16,8 @@
 [flyway](https://flywaydb.org/getstarted/firststeps/maven)
 [h2](https://mvnrepository.com/artifact/com.h2database/h2)
 [maven generator](http://mybatis.org/generator/running/runningWithMaven.html)
+[jquery](https://www.jquery.com/download)
+[jquery](https://www.jsdelivr.com/)
 
 #### 脚本
 

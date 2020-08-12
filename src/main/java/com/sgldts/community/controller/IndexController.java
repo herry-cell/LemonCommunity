@@ -1,15 +1,12 @@
 package com.sgldts.community.controller;
 
-import com.sgldts.community.mapper.UserMapper;
-import com.sgldts.community.model.User;
-import com.sgldts.community.model.UserExample;
+import com.sgldts.community.dto.PaginationDTO;
+import com.sgldts.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author herry
@@ -20,26 +17,14 @@ import java.util.List;
 public class IndexController {
 
     @Autowired
-    private UserMapper userMapper;
+    private QuestionService questionService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    String token = cookie.getValue();
-                    UserExample userExample = new UserExample();
-                    userExample.createCriteria()
-                            .andTokenEqualTo(token);
-                    List<User> users = userMapper.selectByExample(userExample);
-                    if (users.size() != 0) {
-                        request.getSession().setAttribute("user", users.get(0));
-                    }
-                    break;
-                }
-            }
-        }
+    public String index(Model model,
+                        @RequestParam(value = "page", defaultValue = "1") Integer page,
+                        @RequestParam(value = "size", defaultValue = "5") Integer size) {
+        PaginationDTO questionDTOList = questionService.list(page, size);
+        model.addAttribute("paginationDTO", questionDTOList);
 
         return "index";
     }

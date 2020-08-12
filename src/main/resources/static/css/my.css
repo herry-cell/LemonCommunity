@@ -1,0 +1,22 @@
+body {
+    background-color: #efefef;
+}
+
+.main {
+    margin: 30px;
+    background-color: white;
+}
+
+.btn-publish {
+    float: right;
+    margin-bottom: 15px;
+}
+
+.profile .section {
+    margin-top: 15px;
+}
+
+.community-menu {
+    font-size: 13px;
+    color: #999;
+}

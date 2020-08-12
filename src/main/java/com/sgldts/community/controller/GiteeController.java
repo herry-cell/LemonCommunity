@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.sgldts.community.dto.GiteeUser;
 import com.sgldts.community.mapper.UserMapper;
 import com.sgldts.community.model.User;
+import com.sgldts.community.model.UserExample;
 import com.sgldts.community.utils.GiteeHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -58,24 +60,49 @@ public class GiteeController {
         /**
          * 获取到用户信息之后，就该写你自己的业务逻辑了
          */
-        System.out.println(jsonObject.toString());
         String string = jsonObject.toString();
+        System.out.println(string);
         GiteeUser giteeUser = JSON.parseObject(string, GiteeUser.class);
-        System.out.println(giteeUser);
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andAccountIdEqualTo(String.valueOf(giteeUser.getId()));
+        List<User> users = userMapper.selectByExample(example);
         if (giteeUser != null) {
-            User user = new User();
-            String token = UUID.randomUUID().toString();
-            user.setName(giteeUser.getName());
-            user.setAccountId(String.valueOf(giteeUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
-            user.setToken(token);
-
-            response.addCookie(new Cookie("token", token));
-            return "redirect:/";
+            if (users.size() != 0) {
+                User user = users.get(0);
+                user.setName(giteeUser.getName());
+                user.setGmtModified(System.currentTimeMillis());
+                user.setAvatarUrl(giteeUser.getAvatar_url());
+                userMapper.updateByExampleSelective(user, new UserExample());
+                String token = user.getToken();
+                response.addCookie(new Cookie("token", token));
+                return "redirect:/";
+            } else {
+                User user = new User();
+                String token = UUID.randomUUID().toString();
+                user.setName(giteeUser.getName());
+                user.setAccountId(String.valueOf(giteeUser.getId()));
+                user.setGmtCreate(System.currentTimeMillis());
+                user.setGmtModified(user.getGmtCreate());
+                user.setAvatarUrl(giteeUser.getAvatar_url());
+                user.setToken(token);
+                userMapper.insert(user);
+                response.addCookie(new Cookie("token", token));
+                return "redirect:/";
+            }
         } else {
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response) {
+        request.getSession().removeAttribute("user");
+        Cookie token = new Cookie("token", null);
+        token.setMaxAge(0);
+        response.addCookie(token);
+        return "redirect:/";
     }
 
 }
