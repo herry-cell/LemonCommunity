@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>柠檬社区</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/my.css}">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script type="application/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="application/javascript" th:src="@{/js/npm.js}"></script>
+</head>
+<body>
+
+<nav th:replace="navigation :: nav"></nav>
+
+
+
+    <div class="jumbotron">
+        <h1>出错了！！！</h1>
+        <p th:text="${message}">服务器太热了，要不然等下再来试试吧</p>
+        <p><a class="btn btn-primary btn-lg" href="/" role="button">回答主页</a></p>
+    </div>
+
+
+</body>
+</html>
